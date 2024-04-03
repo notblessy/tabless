@@ -25,6 +25,7 @@ const users = [
     email: "john.doe@example.com",
     phone: "+1234567890",
     city: "New York",
+    adjustment_data_of_employee: "2021-10-10",
   },
   {
     id: 2,
@@ -33,6 +34,7 @@ const users = [
     email: "jane.smith@example.com",
     phone: "+1987654321",
     city: "Los Angeles",
+    adjustment_data_of_employee: "2021-10-10",
   },
   {
     id: 3,
@@ -41,6 +43,7 @@ const users = [
     email: "alice.johnson@example.com",
     phone: "+1122334455",
     city: "Chicago",
+    adjustment_data_of_employee: "2021-10-10",
   },
   {
     id: 4,
@@ -49,6 +52,7 @@ const users = [
     email: "bob.williams@example.com",
     phone: "+1555666777",
     city: "Houston",
+    adjustment_data_of_employee: "2021-10-10",
   },
   {
     id: 5,
@@ -57,6 +61,7 @@ const users = [
     email: "michael.brown@example.com",
     phone: "+1444333222",
     city: "San Francisco",
+    adjustment_data_of_employee: "2021-10-10",
   },
   {
     id: 6,
@@ -65,6 +70,7 @@ const users = [
     email: "emma.davis@example.com",
     phone: "+1666777888",
     city: "Seattle",
+    adjustment_data_of_employee: "2021-10-10",
   },
   {
     id: 7,
@@ -73,6 +79,7 @@ const users = [
     email: "james.wilson@example.com",
     phone: "+1777888999",
     city: "Miami",
+    adjustment_data_of_employee: "2021-10-10",
   },
   {
     id: 8,
@@ -81,6 +88,7 @@ const users = [
     email: "olivia.martinez@example.com",
     phone: "+1888999000",
     city: "Dallas",
+    adjustment_data_of_employee: "2021-10-10",
   },
   {
     id: 9,
@@ -89,6 +97,7 @@ const users = [
     email: "william.jones@example.com",
     phone: "+1999000111",
     city: "Atlanta",
+    adjustment_data_of_employee: "2021-10-10",
   },
   {
     id: 10,
@@ -97,6 +106,7 @@ const users = [
     email: "sophia.anderson@example.com",
     phone: "+1000111222",
     city: "Boston",
+    adjustment_data_of_employee: "2021-10-10",
   },
 ];
 
@@ -106,7 +116,7 @@ const defaultColumns = col.map((item) => {
   return {
     header: item,
     accessorKey: item,
-    size: getTextWidth(item) + 40,
+    size: getTextWidth(item) + 20,
     footer: (props) => {
       props.column.id;
     },
@@ -125,22 +135,6 @@ function App() {
     columns,
     getCoreRowModel: getCoreRowModel(),
     enableRowSelection: true,
-    meta: {
-      updateData: (rowIndex, columnId, value) => {
-        setData((old) =>
-          old.map((row, index) => {
-            if (index === rowIndex) {
-              const current = old[rowIndex];
-              return {
-                ...current,
-                [columnId]: value,
-              };
-            }
-            return row;
-          })
-        );
-      },
-    },
   });
 
   return (
@@ -170,6 +164,7 @@ function App() {
                         },
                       }}
                     >
+                      {console.log("size nih", header.getSize())}
                       {header.isPlaceholder
                         ? null
                         : flexRender(
