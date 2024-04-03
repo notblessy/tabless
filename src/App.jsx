@@ -8,6 +8,15 @@ import {
   flexRender,
 } from "@tanstack/react-table";
 
+const getTextWidth = (text) => {
+  const canvas = document.createElement("canvas");
+  const context = canvas.getContext("2d");
+
+  context.font = getComputedStyle(document.body).font;
+
+  return context.measureText(text).width;
+};
+
 const users = [
   {
     id: 1,
@@ -97,6 +106,7 @@ const defaultColumns = col.map((item) => {
   return {
     header: item,
     accessorKey: item,
+    size: getTextWidth(item) + 40,
     footer: (props) => {
       props.column.id;
     },
@@ -105,33 +115,52 @@ const defaultColumns = col.map((item) => {
 
 function App() {
   const [columns] = useState(() => [...defaultColumns]);
+  const [data, setData] = useState(() => [...users]);
 
   const rerender = useReducer(() => ({}), {})[1];
 
   const table = useReactTable({
-    data: users,
+    data,
     columnResizeMode: "onChange",
     columns,
     getCoreRowModel: getCoreRowModel(),
+    enableRowSelection: true,
+    meta: {
+      updateData: (rowIndex, columnId, value) => {
+        setData((old) =>
+          old.map((row, index) => {
+            if (index === rowIndex) {
+              const current = old[rowIndex];
+              return {
+                ...current,
+                [columnId]: value,
+              };
+            }
+            return row;
+          })
+        );
+      },
+    },
   });
 
   return (
     <div className="p-2">
       <div style={{ direction: table.options.columnResizeDirection }}>
         <div className="table-container">
-          <table
-            className="fixed-width-table"
+          <div
+            className="table"
             {...{
               style: {
                 width: table.getCenterTotalSize(),
               },
             }}
           >
-            <thead className="header">
+            <div className="header">
               {table.getHeaderGroups().map((headerGroup) => (
-                <tr key={headerGroup.id}>
+                <div className="tr" key={headerGroup.id}>
                   {headerGroup.headers.map((header) => (
-                    <th
+                    <div
+                      className="th"
                       key={header.id}
                       {...{
                         key: header.id,
@@ -159,24 +188,26 @@ function App() {
                           }`,
                         }}
                       />
-                    </th>
+                    </div>
                   ))}
-                </tr>
+                </div>
               ))}
-            </thead>
-            <tbody
+            </div>
+            <div
               className="tbody"
               style={{ width: "100%", overflowX: "scroll" }}
             >
               {table.getRowModel().rows.map((row) => (
-                <tr
+                <div
                   key={row.id}
-                  className={row.index % 2 === 0 ? "even-row" : "odd-row"}
+                  className={`tr ${
+                    row.index % 2 === 0 ? "even-row" : "odd-row"
+                  }`}
                 >
                   {row.getVisibleCells().map((cell) => {
-                    console.log(cell.column);
                     return (
-                      <td
+                      <div
+                        className="td"
                         key={cell.id}
                         {...{
                           key: cell.id,
@@ -189,13 +220,13 @@ function App() {
                           cell.column.columnDef.cell,
                           cell.getContext()
                         )}
-                      </td>
+                      </div>
                     );
                   })}
-                </tr>
+                </div>
               ))}
-            </tbody>
-          </table>
+            </div>
+          </div>
         </div>
       </div>
       <div className="h-4" />

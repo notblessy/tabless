@@ -23,13 +23,15 @@ body {
   height: calc(100% - 60px);
 }
 
-.fixed-width-table {
+.table {
   border-collapse: separate;
   white-space: nowrap; /* Prevent table from breaking into multiple lines */
   border-spacing: 0;
 }
 
-.header th {
+.th {
+  overflow: hidden;
+  text-overflow: ellipsis;
   background-color: #FFF; /* Header background color */
   border: 0.5px solid #ddd; /* Border for header cells */
   box-shadow: 0 0.5px 1px rgba(0, 0, 0, 0.1); /* Shadow for header cells */
@@ -38,12 +40,26 @@ body {
   font-weight: 600;
   padding: 5px;
   top:0;
+  box-sizing: border-box;
 }
 
-.tbody td {
+.tr {
+  display: flex;
+  width: fit-content;
+}
+
+.tbody {
+  box-sizing: border-box;
+}
+
+.td {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
   font-size: 11px;
   font-weight: 400;
   padding: 5px;
+  box-sizing: border-box;
 }
 
 .even-row {
