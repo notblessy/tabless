@@ -63,11 +63,30 @@ body {
 }
 
 .td input {
+  font-size: 11px;
   border-radius: 0;
   background: none;
   border: none;
   width: 100%;
   padding: 5px;
+  text-overflow: ellipsis;
+}
+
+.td input:focus {
+  
+  background-color: #FFF;
+  color: #333
+}
+
+.td p {
+  font-size: 11px;
+  margin: 0;
+  border-radius: 0;
+  background: none;
+  border: none;
+  width: 100%;
+  padding: 5px;
+  text-overflow: ellipsis;
 }
 
 .even-row {
@@ -76,6 +95,22 @@ body {
 
 .odd-row {
   background-color: #f8f8f8; /* Odd row background color */
+}
+
+.selected-row {
+  background-color: #007AFF; /* Selected row background color */
+}
+
+.selected-row input {
+  color: #FFF; /* Selected row background color */
+}
+
+.deleted-row {
+  background-color: #F2E0DE; /* Selected row background color */
+}
+
+.edited-row {
+  background-color: #E8EEDD; /* Selected row background color */
 }
 
 .max-width-10ch {
